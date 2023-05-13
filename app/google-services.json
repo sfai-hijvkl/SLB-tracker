@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "21732522026",
+    "project_id": "slbtracker",
+    "storage_bucket": "slbtracker.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:21732522026:android:f3ecee9097545ef751eb53",
+        "android_client_info": {
+          "package_name": "com.example.slbtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "21732522026-e11rsajpqf0tv747ql4uvcd5k4gq33mm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRiEJGE1KrDJvzxjkr5IC7vVT2fiAb3po"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "21732522026-e11rsajpqf0tv747ql4uvcd5k4gq33mm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
