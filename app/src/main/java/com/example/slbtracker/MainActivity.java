@@ -3,7 +3,6 @@ package com.example.slbtracker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -66,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for(QueryDocumentSnapshot document: queryDocumentSnapshots){
                     regularBook book = document.toObject(regularBook.class);
-                    regularBooks.add(book);
+                    if (!book.isBorrowed()) {
+                        regularBooks.add(book);
+                    }
                 }
             }
         });
@@ -76,69 +77,69 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                     premiumBook book = document.toObject(premiumBook.class);
-                    premiumBooks.add(book);
+                    if (!book.isBorrowed()) {
+                        premiumBooks.add(book);
+                    }
                 }
             }
         });
+
 
         borrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String bCode = regBookCode.getText().toString();
-                String nDaysStr = regNumDays.getText().toString().trim();
-                String bCode2 = premBookCode.getText().toString();
-                String nDays2Str = premNumDays.getText().toString().trim();
+                String regBookCodeValue = regBookCode.getText().toString().trim();
+                String regNumDaysValue = regNumDays.getText().toString().trim();
+                String premBookCodeValue = premBookCode.getText().toString().trim();
+                String premNumDaysValue = premNumDays.getText().toString().trim();
 
-                boolean regBookBool = false;
-                boolean premBookBool = false;
-
-                if (!TextUtils.isEmpty(bCode) && !TextUtils.isEmpty(nDaysStr)) {
-                    regBookBool = true;
-
-                    int nDays = Integer.parseInt(nDaysStr);
-                    regularBook book = findRegBook(bCode);
-
-                    if (book != null) {
-                        double price = book.calculatePrice(nDays);
-                        regOutPrice.setText("P" + price);
-                        regTitle.setText(book.getTitle());
-                        regAuthor.setText(book.getAuthor());
-                        premBookCode.setText("");
-                        premNumDays.setText("");
-                        premOutPrice.setText("");
-                        premTitle.setText("");
-                        premAuthor.setText("");
+                // Regular Book Part
+                if (!regBookCodeValue.isEmpty() && !regNumDaysValue.isEmpty()) {
+                    regularBook regBook = findRegBook(regBookCodeValue);
+                    if (regBook != null) {
+                        if (regBook.isBorrowed()) {
+                            Toast.makeText(MainActivity.this, "The book " + regBookCodeValue + " has already been borrowed", Toast.LENGTH_SHORT).show();
+                            regOutPrice.setText("");
+                            regTitle.setText("");
+                            regAuthor.setText("");
+                        } else {
+                            regOutPrice.setText("Output Price: $" + regBook.calculatePrice(Integer.parseInt(regNumDaysValue)));
+                            regTitle.setText("Title: " + regBook.getTitle());
+                            regAuthor.setText("Author: " + regBook.getAuthor());
+                        }
                     } else {
-                        Toast.makeText(MainActivity.this, "Invalid Regular Book code", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                if (!TextUtils.isEmpty(bCode2) && !TextUtils.isEmpty(nDays2Str)) {
-                    premBookBool = true;
-
-                    int nDays2 = Integer.parseInt(nDays2Str);
-                    premiumBook book2 = findPremBook(bCode2);
-
-                    if (book2 != null) {
-                        double price = book2.calculatePrice(nDays2);
-                        premOutPrice.setText("P" + price);
-                        premTitle.setText(book2.getTitle());
-                        premAuthor.setText(book2.getAuthor());
-                        regBookCode.setText("");
-                        regNumDays.setText("");
+                        Toast.makeText(MainActivity.this, "Invalid book code for regular book", Toast.LENGTH_SHORT).show();
                         regOutPrice.setText("");
                         regTitle.setText("");
                         regAuthor.setText("");
-                    } else {
-                        Toast.makeText(MainActivity.this, "Invalid Premium Book code", Toast.LENGTH_SHORT).show();
                     }
                 }
 
-                if (!regBookBool && !premBookBool) {
-                    Toast.makeText(MainActivity.this, "Please enter a book code and number of days", Toast.LENGTH_SHORT).show();
+                // Premium Book Part
+                if (!premBookCodeValue.isEmpty() && !premNumDaysValue.isEmpty()) {
+                    premiumBook premBook = findPremBook(premBookCodeValue);
+                    if (premBook != null) {
+                        if (premBook.isBorrowed()) {
+                            Toast.makeText(MainActivity.this, "The book " + premBookCodeValue + " has already been borrowed", Toast.LENGTH_SHORT).show();
+                            premOutPrice.setText("");
+                            premTitle.setText("");
+                            premAuthor.setText("");
+                        } else {
+                            premOutPrice.setText("Output Price: $" + premBook.calculatePrice(Integer.parseInt(premNumDaysValue)));
+                            premTitle.setText("Title: " + premBook.getTitle());
+                            premAuthor.setText("Author: " + premBook.getAuthor());
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, "Invalid book code for premium book", Toast.LENGTH_SHORT).show();
+                        premOutPrice.setText("");
+                        premTitle.setText("");
+                        premAuthor.setText("");
+                    }
                 }
             }
         });
+
+
 
 
 
@@ -146,11 +147,13 @@ public class MainActivity extends AppCompatActivity {
 
     private regularBook findRegBook(String bookCode){
 
-        for(regularBook regBook: regularBooks){
+        for (regularBook regBook : regularBooks) {
             if (regBook != null && regBook.getBookCode() != null && regBook.getBookCode().equals(bookCode)) {
                 return regBook;
             }
         }
+
+        Toast.makeText(MainActivity.this, "Invalid book code", Toast.LENGTH_SHORT).show();
         return null;
     }//
 
@@ -160,8 +163,9 @@ public class MainActivity extends AppCompatActivity {
                 return premBook;
             }
         }
+
+        Toast.makeText(MainActivity.this, "Invalid book code", Toast.LENGTH_SHORT).show();
+
         return null;
     }//
-
-    
 }
