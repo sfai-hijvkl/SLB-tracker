@@ -16,8 +16,4 @@ public class regularBook extends Book{
         return price;
     }
 
-    public double calculatePrice(int numOfDays) {
-        double price = numOfDays * 20.0;
-        return price;
-    }
 }
