@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             regTitle.setText("");
                             regAuthor.setText("");
                         } else {
-                            regOutPrice.setText("Output Price: $" + regBook.calculatePrice(Integer.parseInt(regNumDaysValue)));
+                            regOutPrice.setText("Output Price: $" + regBook.getPrice());
                             regTitle.setText("Title: " + regBook.getTitle());
                             regAuthor.setText("Author: " + regBook.getAuthor());
                         }
@@ -125,7 +125,9 @@ public class MainActivity extends AppCompatActivity {
                             premTitle.setText("");
                             premAuthor.setText("");
                         } else {
-                            premOutPrice.setText("Output Price: $" + premBook.calculatePrice(Integer.parseInt(premNumDaysValue)));
+                            int premNumDays = Integer.parseInt(premNumDaysValue);
+                            premBook.setNumOfDays(premNumDays);
+                            premOutPrice.setText("Output Price: $" + premBook.getPrice());
                             premTitle.setText("Title: " + premBook.getTitle());
                             premAuthor.setText("Author: " + premBook.getAuthor());
                         }
