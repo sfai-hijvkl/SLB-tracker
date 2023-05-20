@@ -42,7 +42,7 @@ public abstract class Book {
         isBorrowed = borrowed;
     }
     
-    public void setNumOfDays(){
+    public void setNumOfDays(int numOfDays){
     this.numOfDays = numOfDays;
     }
 

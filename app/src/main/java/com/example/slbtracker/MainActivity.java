@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 String premBookCodeValue = premBookCode.getText().toString().trim();
                 String premNumDaysValue = premNumDays.getText().toString().trim();
 
-                // Regular Book Part
+
                 if (!regBookCodeValue.isEmpty() && !regNumDaysValue.isEmpty()) {
                     regularBook regBook = findRegBook(regBookCodeValue);
                     if (regBook != null) {
@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             regTitle.setText("");
                             regAuthor.setText("");
                         } else {
+                            regBook.setNumOfDays(Integer.parseInt(regNumDaysValue));
                             regOutPrice.setText("Output Price: $" + regBook.getPrice());
                             regTitle.setText("Title: " + regBook.getTitle());
                             regAuthor.setText("Author: " + regBook.getAuthor());
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                // Premium Book Part
+
                 if (!premBookCodeValue.isEmpty() && !premNumDaysValue.isEmpty()) {
                     premiumBook premBook = findPremBook(premBookCodeValue);
                     if (premBook != null) {
