@@ -18,11 +18,4 @@ public class premiumBook extends Book {
         return price;
     }
 
-    public double calculatePrice(int numOfDays) {
-        double price = numOfDays * 50.0;
-        if (numOfDays > 7) {
-            price += (numOfDays - 7) * 25.0;
-        }
-        return price;
-    }
 }
