@@ -41,6 +41,10 @@ public abstract class Book {
     public void setBorrowed(boolean borrowed) {
         isBorrowed = borrowed;
     }
+    
+    public void setNumOfDays(){
+    this.numOfDays = numOfDays;
+    }
 
     public abstract double getPrice();
 }
