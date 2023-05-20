@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         if (regBook.isBorrowed()) {
                             Toast.makeText(MainActivity.this, "The book " + regBookCodeValue + " has already been borrowed", Toast.LENGTH_SHORT).show();
                             regOutPrice.setText("");
-                            regTitle.setText("");
-                            regAuthor.setText("");
+
                         } else {
                             regBook.setNumOfDays(Integer.parseInt(regNumDaysValue));
                             regOutPrice.setText("Output Price: $" + regBook.getPrice());
@@ -123,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
                         if (premBook.isBorrowed()) {
                             Toast.makeText(MainActivity.this, "The book " + premBookCodeValue + " has already been borrowed", Toast.LENGTH_SHORT).show();
                             premOutPrice.setText("");
-                            premTitle.setText("");
-                            premAuthor.setText("");
+
                         } else {
                             int premNumDays = Integer.parseInt(premNumDaysValue);
                             premBook.setNumOfDays(premNumDays);
@@ -156,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        Toast.makeText(MainActivity.this, "Invalid book code", Toast.LENGTH_SHORT).show();
         return null;
     }//
 
@@ -166,9 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 return premBook;
             }
         }
-
-        Toast.makeText(MainActivity.this, "Invalid book code", Toast.LENGTH_SHORT).show();
-
         return null;
     }//
 }
